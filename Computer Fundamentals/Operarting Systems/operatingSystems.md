@@ -29,13 +29,12 @@ A Kernal is a special program, which handles most of the Tasks (Random-access me
 Simple batch systems uses software known as `Monitor`, which interfaces with the processor directly and refrains users from accessing the processors directly.
 
 >User fed an input to the computer operator, who gathered similar jobs(tasks to be performed) and placed an entire batch (group of similar type tasks) for utilization by the Monitor.
-
 >Each program is built to branch back to the monitor when it completes processing.
 At this point, the monitor automatically begins loading the following program.
 
 With Batch OS, Processor time alternates between their execution of the user's program and the execution of the Monitor.
 
-However, now some main memory is given to the monitor, and the monitor consumes some processor time.Both of these are some forms of overhead. 
+However, now some main memory is given to the monitor, and the monitor consumes some processor time.Both of these are some forms of overhead.
 
 Despite this overhead, simple batch systems improve the utilization of the processor.
 
@@ -227,3 +226,160 @@ it's main objective is to consume high computational power and increase executio
 
 - Speed can degrade due to one failing processor.
 - needs context switching, can impact performance.
+
+---
+
+## **Virtual Memory in OS**
+
+---
+
+### **What is Virtual Memory min OS:**
+
+Page Table is a mapping that the OS uses to retrieve data from the RAM or Storage.
+
+Virtual Memory acts like a main memory, but removing load from RAM.
+
+Some data stored in RAM that isn't actively used can be temporarily relocated to virtual memory.
+This frees up RAM space, which may be utilized to store data that the system will need to accesss.
+
+essentially a system with signifiantly less RAM can run smoothly, by exchanging data between RAM and virtual memory.
+
+![virtual memory](../../images/Computer%20Fundamentals/Operating%20Systems/what-is-virtual-memory-in-os.jpeg "virtual memory")
+
+### **How Virtual Memory Works:**
+
+If the OS needs `500 MB of RAM` to hold all running processes.
+
+But we only have 10 MB of capacity RAM.
+
+OS will then allocate `490 MB of Virtual Memory` and use Virtual Memory Manager(VMM) application to manage it.
+
+![virtual memory working](../../images/Computer%20Fundamentals/Operating%20Systems/working-of-virtual-memory-in-os.jpeg "virtual memory working")
+
+### **Demand Paging:**
+
+Demand Paging is a process that keepss pages of a process that are infrequently used in secondary memory, and pulls them only when required to satisfy demand.
+
+![what is demand paging](../../images/Computer%20Fundamentals/Operating%20Systems/what-is-demand-paging.jpeg "what is demand paging")
+
+When Program A finishes executing, it swaps out the memory that was in use. Program B then swaps in the memory tat was required by it to fulfill the timely demand.
+
+### **Page Table:**
+
+A Logical Data Structure that iss used by a Virtual Memory to record the mapping between virtual and physical addresses,whereas the hardware, RAM uses physical addresses.
+
+### **Swap In and Swap Out:**
+
+When RAM is insufficient to store data, swap out tranfers certain programs to storage.
+
+When RAM is available, we swap in the application from storage to RAM.
+
+### **Advantages of Virtual Memory in OS:**
+
+- More Multi-Programming.
+- Data Sharing.
+- Increases Perceived Memory.
+- Effective Use of CPU.
+
+### **Disadvantages of VBirtual Memory in OS:**
+
+- Slower System.
+- Less Storage Space.
+- System Stability.
+
+---
+
+## **Page Replacement in OS:**
+
+---
+
+### **What is Page Replacement in OS:**
+
+Page Replacement in OS uses Virtual Memory using Demand Paging.
+
+When a page is requested by a process from virtual memory,
+the OS needs to decide which page will get replaced by the new page.
+
+When CPU requests for a page and its not in RAM, we need to decide which page to evict in RAM to bring forth the new page from virtual memory.
+
+We have some Algorithms in the OS for this scenarios.
+
+### **Page Replacement Algo's in OS:**
+
+**`First In First Out (FIFO):`**
+
+Just like a Queue, the Oldest Page is evicted till we can accomodate the new page.
+
+**`Optimal Page Replacement in OS:`**
+
+The Pages that will be referred farthest into the future will be replaced.
+
+**`Least Recently Used (LRU):`**
+
+Works on the principle of locality of a reference, program has a tendency to access the same set of memory locations repetively over a short period of time.
+
+And page that was not recently used is removed.
+
+**`Last In First Out (LIFO):`**
+
+Just like a Stack, newest page is replaced by the requested page.
+
+**`Random Page Replacement:`**
+
+Randomly removes the pages in memory.
+but performance can be random too.
+
+---
+
+## **Segmentation in OS:**
+
+---
+
+### **Overview:**
+
+Segmentation divides user program and the secondary memory into uneven-sized blocks known as **Segments**.
+
+Can be of two types Virtual Memory Segmentation and Simple Segmentation.
+
+Segmentation Table is used to store the information of all segments of currently executing process.
+
+Segmentation dividess processes into smaller subparts known as modules.
+It need not be in contiguous memory.
+
+## **Why Segmentation is Required:**
+
+Paging Techique, a function is divided into pages without considering that the relative parts of code can also get divided.
+
+So for the process in execution, CPU must load more than one page into the frames so that the complete code is there for execution.
+
+So instead of Paging, we segment the codde into executable modules containg the code for process in execution.
+
+## **Segment Table and Its Uses:**
+
+It's Used to store info about all the segments of a process.
+CPU Logical Address to Physcial Address a Segment Table is Used.
+
+It has 2 components `Segment Base` (Base Address of Segment) and `Segment Limit` (Offset Size).
+
+`STBR`: STBR stands for Segment Table Base Register. STBR stores the base address of the segment table.
+
+`STLR`: STLR stands for Segment Table Length Register. STLR stores the number of segments used by a program.
+
+## **Types of Segmentations in OS:**
+
+- **Virtual Memory Segmentation:**
+    Dividing Processes into `n` number of segments.
+    Not all the segments are not divided at a time.
+
+- **Simple Segmentation:**
+    Dividing Processes into `n` number of segments.
+    Segmentation is done all together at once.
+    Happens at Run-Time.
+
+## **Segment Descriptor:**
+
+- Segment Descriptor: 8 bytes
+- Base Address: 32 bits
+- Segment Limit: 20 bits
+
+![Segment Descriptor](../../images/Computer%20Fundamentals/Operating%20Systems/overview-of-Segment-descriptor.jpeg "Segment Descriptor")
